@@ -37,8 +37,9 @@ create table Tickets (
   price int ,
   Date_of_Purchase date 
   ) ;
-
-  select CONCAT([Departure Station],'--> ',[Arrival Destination] )as Route_Station
+ALTER TABLE Tickets
+DROP COLUMN passenger_ID;
+select CONCAT([Departure Station],'--> ',[Arrival Destination] )as Route_Station
   from railway  ;
 
   select *  from railway;
@@ -179,3 +180,42 @@ order by 2 desc ;
 
 
 
+create table Ticket (
+  Ticket_ID int IDENTITY(1,1) primary key , 
+  Ticket_class varchar(100) ,
+  Ticket_Type varchar(100) ,
+  price int ,
+  Date_of_Purchase date 
+  ) ;
+
+  CREATE TABLE Route_(
+    Route_ID INT IDENTITY(1,1) PRIMARY KEY ,
+	Depature_station varchar(100) ,
+	Arrival_Destination varchar(100) ,
+	Journey_Status varchar(100) ,
+	Duration time ,
+	
+);
+
+create table Refund(
+		Refund_ID int identity(1,1) primary key,
+		Refund_Request varchar(50)
+		);
+
+create table Transaction_(
+				Trasaction_ID  int primary key ,
+				Ticket_ID int  ,
+				Route_ID int ,
+				Refund_ID int,
+				Purchase_Type varchar(100),
+				Date_of_Journey date ,
+				Departure_Time  time ,
+				Arrival_Time time ,
+				Reason_for_Delay varchar(100) ,
+				Payment_Method varchar(100) ,
+				Amount int ,
+				FOREIGN KEY (Ticket_ID) REFERENCES Ticket(Ticket_ID),
+				FOREIGN KEY (Route_ID) REFERENCES Route_(Route_ID),
+				FOREIGN KEY (Refund_ID) REFERENCES Refund(Refund_ID)
+
+);
